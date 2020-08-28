@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리스트</title>
+<title>와인추천</title>
 </head>
 <body>
 

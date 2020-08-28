@@ -2,6 +2,7 @@ package com.potofolio.wine.member;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,9 @@ import com.potofolio.wine.common.Const;
 @Controller
 public class MemberController {
 
+	@Autowired
+	private MemberService service;
+
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login() {
 		return "user/login";
@@ -20,7 +24,7 @@ public class MemberController {
 
 	@RequestMapping(value = "loginPost", method = RequestMethod.POST)
 	public String login(Model model) {
-		return "join";
+		return "user/join";
 	}
 
 	@RequestMapping(value = "join", method = RequestMethod.GET)
@@ -29,8 +33,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "joinPost", method = RequestMethod.POST)
-	public String join(Model model) {
-		return "user/join";
+	public String join(Model model, MemberVO param) {
+		int result = service.join(param);
+		return "redirect:/user/login";
 	}
 
 	@RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
@@ -45,7 +50,12 @@ public class MemberController {
 	@RequestMapping(value = "joinkakao", method = RequestMethod.GET)
 	public String joinKAKAO(@RequestParam(required = false) String code, @RequestParam(required = false) String error,
 			HttpSession hs) {
-
-		return "";
+		System.out.println("code: " +code);
+		System.out.println("error: "+error);
+		
+		if(code==null) {
+			
+		}
+		return "redirect:/wine/recommend";
 	}
 }
