@@ -5,7 +5,7 @@ public class MemberVO {
 	private String cid;
 	private String cpw;
 	private String salt;
-	private String upwConfirm;
+	private String cpwConfirm;
 	private String nm;
 	private String ph;
 	private String email;
@@ -34,11 +34,11 @@ public class MemberVO {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	public String getUpwConfirm() {
-		return upwConfirm;
+	public String getCpwConfirm() {
+		return cpwConfirm;
 	}
-	public void setUpwConfirm(String upwConfirm) {
-		this.upwConfirm = upwConfirm;
+	public void setCpwConfirm(String cpwConfirm) {
+		this.cpwConfirm = cpwConfirm;
 	}
 	public String getNm() {
 		return nm;

@@ -10,7 +10,7 @@
 	<form action="/joinPost" method="post">
 	<div><label>아이디: <input type="text" name="cid" placeholder="아이디"></label></div>
 	<div><label>비밀번호: <input type="password" name="cpw" placeholder="비밀번호"></label></div>
-	<div><label>비밀번호 확인: <input type="password" name="cpwC" placeholder="비밀번호 확인"></label></div>
+	<div><label>비밀번호 확인: <input type="password" name="cpwCnfirm" placeholder="비밀번호 확인"></label></div>
 	<div><label>이름: <input type="text" name="nm" placeholder="이름"></label></div>
 	<div><label>휴대폰: <input type="text" name="ph" placeholder="휴대폰"></label></div>
 	<div><label>이메일: <input type="text" name="email" placeholder="이메일"></label>@
