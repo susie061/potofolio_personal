@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>와인추천</title>
+<title>메인화면 입니다</title>
 </head>
 <body>
- 와이니니니니닌이이ㅣㅇ
+
 </body>
 </html>
