@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div>${msg}</div>
-	<form action="/user/loginPost" method="post">
+	<form class ="str" action="/user/loginPost" method="post">
 	<div><input type="text" name="cid" placeholder="ID"></div>
 	<div><input type="password" name="cpw" placeholder="PW"></div>
 	<div><input type="submit" value="로그인"></div>

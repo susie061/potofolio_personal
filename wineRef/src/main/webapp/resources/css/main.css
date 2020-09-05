@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+       html,body{
+            margin :0;
+            padding :0;
+            height: 100%;
+        }
+    
+       #container{
+           display: flex;
+           height: 100%;
+           flex-direction: column;
+       }
+       #container>header{
+           flex-grow: 1;
+           background-color: antiquewhite;
+       }
+       #container>section{
+        display: flex;
+        flex-grow: 10;
+       }
+       #container>footer{
+        flex-grow: 1;
+        background-color: darkblue;
+       }
+      
+       #container section #menus2{
+        flex-grow: 50;
+        background-color:cornflowerblue;
+       }
+       #container section #menus3{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        background-color:burlywood;
+       }
+       #container section #menus4{
+        
+        flex-grow: 1;
+        background-color:crimson;
+       }
+       #container section #menus5{
+        
+        flex-grow: 1;
+        background-color:darkgreen;
+       }

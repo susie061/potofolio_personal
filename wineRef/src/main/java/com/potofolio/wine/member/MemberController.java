@@ -52,12 +52,6 @@ public class MemberController {
 		return "user/join";
 	}
 
-	@RequestMapping(value = "/joinPost", method = RequestMethod.POST)
-	public String join(Model model, MemberVO param) {
-		int result = service.join(param);
-		return "redirect:/user/login";
-	}
-	
 	@ResponseBody
 	@RequestMapping(value = "/chkId", method = RequestMethod.GET)
 	public Map<String, Object> chkId(@RequestParam String cid) {	
@@ -70,6 +64,14 @@ public class MemberController {
 		
 		return map;
 	}
+	
+	@RequestMapping(value = "/joinPost", method = RequestMethod.POST)
+	public String join(Model model, MemberVO param) {
+		int result = service.join(param);
+		return "redirect:/user/login";
+	}
+	
+
 
 	@RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
 	public String loginKAKAO() {
