@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="chkId" parameterType="String" resultType="int">
-		SELECT count(cid) FROM t_user
+		SELECT count(cid) FROM wine_memberInfo
 		WHERE cid = #{cid}
 	</select>
 	

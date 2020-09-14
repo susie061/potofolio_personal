@@ -16,8 +16,8 @@
 				<input type="hidden" id="checkId" value="2">
 			</div>
 			<span><label>아이디: <input type="text" name="cid"
-					placeholder="아이디" onchange="defaultCheckIdValue()"></label></span> <span><input
-				type="button" value="ID 중복확인" onclick="return chkId()"></span>
+					placeholder="아이디" onchange="defaultCheckIdValue()"></label></span> 
+					<span><button type="button"  onclick="return chkId()">ID중복확인</button></span>
 			<div id="duplicationIdMsg"></div>
 			<div>
 				<label>비밀번호: <input type="password" name="cpw"
@@ -62,7 +62,7 @@
 				return false
 			}
 			
-			axios.get('/chkId', {
+			axios.get('/user/chkId', {
 				params: {
 					cid : cid
 				}
