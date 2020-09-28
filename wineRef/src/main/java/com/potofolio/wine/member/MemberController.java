@@ -32,16 +32,24 @@ public class MemberController {
 		int result = service.login(param, hs);
 		System.out.println("result : " + result);
 		
+		String cid=param.getCid();
+		String cpw=param.getCpw();
+		
+		
 		String msg = "에러발생";
-		switch(result) {
-		case 1:
-			return "redirect:/wine/recommend";
-		case 2:
-			msg = "아이디를 확인해 주세요";
-			break;
-		case 3:
-			msg = "비밀번호를 확인해 주세요";
-			break;
+		
+		if(cid.equals("")) {
+			msg="아이디를 입력해 주세요";
+		}else if(!cid.equals("") && cpw.equals("")) {
+			msg = "비밀번호를 입력해 주세요";
+		}else {
+			if(result==1) {
+				return "redirect:/wine/recommend";
+			}else if(result==2) {
+				msg="없는 아이디입니다. 확인해주세요";
+			}else if(result ==3) {
+				msg="패스워드가 일치하지 않습니다. 확인해주세요";
+			}
 		}
 		model.addAttribute("msg", msg);
 		return "user/login";
