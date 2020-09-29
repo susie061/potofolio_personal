@@ -28,12 +28,12 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-	public String login(Model model, MemberVO param, HttpSession hs) {
-		int result = service.login(param, hs);
+	public String login(Model model, MemberVO mvo, HttpSession hs) {
+		int result = service.login(mvo, hs);
 		System.out.println("result : " + result);
 		
-		String cid=param.getCid();
-		String cpw=param.getCpw();
+		String cid=mvo.getCid();
+		String cpw=mvo.getCpw();
 		
 		
 		String msg = "에러발생";
@@ -74,8 +74,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/joinPost", method = RequestMethod.POST)
-	public String join(Model model, MemberVO param) {
-		int result = service.join(param);
+	public String join(Model model, MemberVO mvo) {
+		int result = service.join(mvo);
 		return "redirect:/user/login";
 	}
 	
