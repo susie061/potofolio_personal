@@ -29,26 +29,29 @@ public class MemberController {
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
 	public String login(Model model, MemberVO mvo, HttpSession hs) {
-		int result = service.login(mvo, hs);
-		System.out.println("result : " + result);
-		
-		String cid=mvo.getCid();
-		String cpw=mvo.getCpw();
-		
-		
+
+		System.out.println("cid: " + mvo.getCid());
+		System.out.println("cpw: " + mvo.getCpw());
 		String msg = "에러발생";
+
+		String cid = mvo.getCid();
+		String cpw = mvo.getCpw();
 		
-		if(cid.equals("")) {
-			msg="아이디를 입력해 주세요";
-		}else if(!cid.equals("") && cpw.equals("")) {
+		if (cid.equals("")) {
+			msg = "아이디를 입력해 주세요";
+		} else if (!cid.equals("") && cpw.equals("")) {
 			msg = "비밀번호를 입력해 주세요";
-		}else {
-			if(result==1) {
-				return "redirect:/wine/recommend";
-			}else if(result==2) {
-				msg="없는 아이디입니다. 확인해주세요";
-			}else if(result ==3) {
-				msg="패스워드가 일치하지 않습니다. 확인해주세요";
+			model.addAttribute("cid", cid);
+		} else {
+
+			int result = service.login(mvo, hs);
+			
+			if (result == 1) {
+				return "redirect:/main";
+			} else if (result == 2) {
+				msg = "없는 아이디입니다. 확인해주세요";
+			} else if (result == 3) {
+				msg = "패스워드가 일치하지 않습니다. 확인해주세요";
 			}
 		}
 		model.addAttribute("msg", msg);
@@ -60,26 +63,24 @@ public class MemberController {
 		return "user/join";
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/chkId", method = RequestMethod.GET)
-	public Map<String, Object> chkId(@RequestParam String cid) {	
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		int result = service.chkId(cid);
-		
-		System.out.println("중복체크 :" + result);
-		map.put("result", result);
-		
-		return map;
-	}
-	
 	@RequestMapping(value = "/joinPost", method = RequestMethod.POST)
-	public String join(Model model, MemberVO mvo) {
+	public String joinPost(Model model, MemberVO mvo) {
 		int result = service.join(mvo);
 		return "redirect:/user/login";
 	}
-	
 
+	@ResponseBody
+	@RequestMapping(value = "/chkId", method = RequestMethod.GET)
+	public Map<String, Object> chkId(@RequestParam String cid) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = service.chkId(cid);
+
+		System.out.println("중복체크 :" + result);
+		map.put("result", result);
+
+		return map;
+	}
 
 	@RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
 	public String loginKAKAO() {
@@ -97,8 +98,15 @@ public class MemberController {
 		System.out.println("error: " + error);
 
 		if (code == null) {
-
+			return "return:/user/login";
 		}
-		return "redirect:/wine/recommend";
+		int result = service.kakaoLogin(code, hs);
+		return "redirect:/main";
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession hs) {
+		hs.invalidate();
+		return "redirect:/user/login";
 	}
 }

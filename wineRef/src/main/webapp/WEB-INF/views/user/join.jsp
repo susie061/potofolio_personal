@@ -11,7 +11,7 @@
 	<div>${msg}</div>
 	<div>
 		<input type="hidden" id="chkId" value="2">
-		<form id="frm" action="/join" method="post" onsubmit="return chk()">
+		<form id="frm" action="/user/joinPost" method="post" onsubmit="return chk()">
 			<div>
 				<input type="hidden" id="checkId" value="2">
 			</div>
