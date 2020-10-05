@@ -4,8 +4,8 @@
 
 	<insert id="join" parameterType="com.potofolio.wine.member.MemberVO">
 		insert into wine_memberInfo
-		(cid, cpw, salt, nm, ph, email) 
-		values(#{cid} ,#{cpw},#{salt}, #{nm}, #{ph}, #{email})
+		(cid, cpw, salt, nm, email) 
+		values(#{cid} ,#{cpw},#{salt}, #{nm}, #{email})
 	</insert>
 	
 	<select id="login" parameterType="com.potofolio.wine.member.MemberVO" resultType="com.potofolio.wine.member.MemberVO">

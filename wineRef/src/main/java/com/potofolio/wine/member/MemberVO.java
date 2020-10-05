@@ -7,9 +7,10 @@ public class MemberVO {
 	private String salt;
 	private String cpwConfirm;
 	private String nm;
-	private String ph;
 	private String email;
 	private String r_dt;
+	
+	
 	public int getI_user() {
 		return i_user;
 	}
@@ -45,12 +46,6 @@ public class MemberVO {
 	}
 	public void setNm(String nm) {
 		this.nm = nm;
-	}
-	public String getPh() {
-		return ph;
-	}
-	public void setPh(String ph) {
-		this.ph = ph;
 	}
 	public String getEmail() {
 		return email;

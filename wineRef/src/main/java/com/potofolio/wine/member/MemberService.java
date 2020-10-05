@@ -48,6 +48,10 @@ public class MemberService {
 	public int login(MemberVO mvo, HttpSession hs) {
 		int result = 0;
 		MemberVO data = mapper.login(mvo);
+		System.out.println("cid: " + mvo.getCid());
+		System.out.println("cpw: " + mvo.getCpw());
+		
+		
 		if (data == null) {
 			result = 2;
 		} else {

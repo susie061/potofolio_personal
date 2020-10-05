@@ -98,7 +98,7 @@ public class MemberController {
 		System.out.println("error: " + error);
 
 		if (code == null) {
-			return "return:/user/login";
+			return "redirect:/user/login";
 		}
 		int result = service.kakaoLogin(code, hs);
 		return "redirect:/main";

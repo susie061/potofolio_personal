@@ -11,7 +11,11 @@
 	<div>#{loginUser.nm}님 반갑습니다</div>
 	<a href="/wine/recommend">글쓰기</a>
 	<table>
-		
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+		</tr>
 	</table>
 </body>
 </html>

@@ -14,18 +14,21 @@ public class WineListController {
 	@Autowired
 	private MemberService service;
 
-	@RequestMapping(value = "/wineRef", method = RequestMethod.GET)
+	@RequestMapping(value = "/ref", method = RequestMethod.GET)
 	public String wineRef() {
 		return "wine/recommend";
 	}
-	@RequestMapping(value = "/wineRefList", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/refList", method = RequestMethod.GET)
+	public String refList(Model model) {
+		return "wine/refList";
+	}
+	
+	@RequestMapping(value = "/refListPost", method = RequestMethod.POST)
 	public String wineRef(Model model,WineVO wvo) {
 		
 		
 		return "redirect:/wine/refList";
 	}
-	@RequestMapping(value = "/refList", method = RequestMethod.GET)
-	public String refList(Model model) {
-		return "wine/refList";
-	}
+	
 }
