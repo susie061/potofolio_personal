@@ -19,6 +19,11 @@ public class WineListController {
 		return "wine/recommend";
 	}
 	
+	@RequestMapping(value = "/refPost", method = RequestMethod.POST)
+	public String wineRef(Model model) {
+		return "redirect:/wine/refList";
+	}
+	
 	@RequestMapping(value = "/refList", method = RequestMethod.GET)
 	public String refList(Model model) {
 		return "wine/refList";

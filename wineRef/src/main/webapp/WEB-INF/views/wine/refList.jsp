@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div>#{loginUser.nm}님 반갑습니다</div>
-	<a href="/wine/recommend">글쓰기</a>
+	<a href="/wine/ref">글쓰기</a>
 	<table>
 		<tr>
 			<th>번호</th>

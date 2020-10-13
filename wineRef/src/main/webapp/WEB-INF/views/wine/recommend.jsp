@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>와인추천</title>
+<title>글쓰기</title>
 </head>
 <body>
-	<form id="frm" action="/wineRefPost" method="post"  enctype="multipart/form-data" onsubmit="chk()">
+	<form id="frm" action="/wine/refPost" method="post"  enctype="multipart/form-data" onsubmit="chk()">
 		<div><img id="ref_wine" src="${myImg}"></div>
 		<div><input type="text" placeholder="Title" name="제목"></div>
 		<div><input type="text" placeholder="degree" name="도수"></div>
