@@ -10,7 +10,7 @@
 <body>
 	
 	<div>와인의 모든 것</div>
-	<a href="/main">검색<span><img src="/resources/img/search.png" class="searchBox"></span></a>
+	<a href="/wine/main">검색<span><img src="/resources/img/search.png" class="searchBox"></span></a>
 	<div><span><input type="text"></span></div>
 		<c:if test="${loginUser.i_user eq null}">
 			<a href="/user/login">Log In</a>
@@ -19,7 +19,10 @@
 			<a href="/user/logout">Log Out</a>
 		</c:if>
 		<c:if test="${loginUser.i_user ne null}">
-			<a href="/wine/wineRef">글쓰기</a>
+			<a href="/wine/recommend">글쓰기</a>
+		</c:if>
+		<c:if test="${loginUser.i_user ne null}">
+			<a href="/wine/refList">리스트로가기</a>
 		</c:if>
 </body>
 </html>

@@ -48,6 +48,7 @@ public class MemberService {
 	public int login(MemberVO mvo, HttpSession hs) {
 		int result = 0;
 		MemberVO data = mapper.login(mvo);
+		
 		System.out.println("cid: " + mvo.getCid());
 		System.out.println("cpw: " + mvo.getCpw());
 		
@@ -58,8 +59,12 @@ public class MemberService {
 			String clientCpw = MyUtils.hashPassword(mvo.getCpw(), data.getSalt());
 			if (data.getCpw().equals(clientCpw)) {
 				result = 1;
-				data.setCpw(null);
-				hs.setAttribute("loginUser", data);
+				MemberVO loginUser = new MemberVO();
+				loginUser.setI_user(data.getI_user());
+				loginUser.setNm(data.getNm());
+				hs.setAttribute("loginUser", loginUser);
+				
+			//	data.setCpw(null);
 			} else {
 				result = 3;
 			}

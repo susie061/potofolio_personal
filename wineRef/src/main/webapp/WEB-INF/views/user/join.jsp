@@ -31,14 +31,7 @@
 				<label>이름:<input type="text" name="nm" placeholder="이름"></label>
 			</div>
 			<div>
-				<label>이메일: <input type="text" name="email"
-					placeholder="이메일"></label>@<label> <select>
-						<option value="">선택</option>
-						<option value="">naver.com</option>
-						<option value="">hanmail.com</option>
-						<option value="">gamail.com</option>
-				</select>
-				</label>
+				<label>이메일: <input type="text" name="email" placeholder="이메일"></label>
 			</div>
 			<div>
 				<input type="submit" value="회원가입">

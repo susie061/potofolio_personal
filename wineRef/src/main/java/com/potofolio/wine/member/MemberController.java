@@ -21,7 +21,7 @@ public class MemberController {
 
 	@Autowired
 	private MemberService service;
-
+//로그인 화면 띄워주는 창
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "user/login";

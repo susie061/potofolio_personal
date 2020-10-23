@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.potofolio.wine.info.WineListMapper">
-	<insert id="wineRef" parameterType="com.potofolio.wine.info.WineVO">
+	<insert id="insWine" parameterType="com.potofolio.wine.info.WineVO">
 		insert into wine_info
-		(wine_name ,degree,taste,sort,brand,img)
+		(wine_name, wineCtnt)
 		values
-		(#{wine_name},#{degree},#{taste},#{sort},#{brand},#{img})
+		(#{wine_name}, #{wineCtnt})
 	</insert>
 	
-	<select id="refList" parameterType="com.potofolio.wine.info.WineVO" resultType="com.potofolio.wine.info.WineVO">
-		select * wine_info
-		where i_user=#{i_user}
+	<select id="selWineList" parameterType="com.potofolio.wine.info.WineVO" resultType="com.potofolio.wine.info.WineVO">
+		select wine_num , wine_name, r_dt from wine_info
+		
 	</select>
+	
+	<select id ="selWine" resultType="com.potofolio.wine.info.WineVO" parameterType="com.potofolio.wine.info.WineVO">
+		select wine_num , wine_name, wineCtnt, r_dt from wine_info
+		where wine_num =#{wine_num}	
+	</select>
+	
+	<update id="update" parameterType="com.potofolio.wine.info.WineVO">
+		UPDATE wine_info SET wine_name =#{wine_name}, wineCtnt =#{wineCtnt} WHERE wine_num = #{wine_num};
+	</update>
+	
+	<delete id="delWine" parameterType="com.potofolio.wine.info.WineVO">
+		DELETE FROM wine_info 
+		WHERE wine_num = #{wine_num};
+	</delete>
+	
+	<insert id="insertCmt" parameterType="com.potofolio.wine.info.WineCmtVO" 
+		useGeneratedKeys="true" keyProperty="i_comment">
+		insert into wine_cmt (cid, ctnt, wine_name, i_user)
+		values(#{cid} ,#{ctnt}, #{wine_name}, #{i_user})
+	</insert>
+	
 </mapper> 
