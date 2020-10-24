@@ -32,6 +32,7 @@ public class MemberController {
 
 		System.out.println("cid: " + mvo.getCid());
 		System.out.println("cpw: " + mvo.getCpw());
+		System.out.println("i_user: " + mvo.getI_user());
 		String msg = "에러발생";
 
 		String cid = mvo.getCid();

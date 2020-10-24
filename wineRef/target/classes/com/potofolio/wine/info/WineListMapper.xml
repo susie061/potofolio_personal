@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.potofolio.wine.info.WineListMapper">
-	<insert id="insWine" parameterType="com.potofolio.wine.info.WineVO">
+	<insert id="insWine" parameterType="com.potofolio.wine.info.WineVO"
+			keyProperty="wine_num" useGeneratedKeys="true">
 		insert into wine_info
-		(wine_name, wineCtnt)
+		(wine_name, wineCtnt, i_user )
 		values
-		(#{wine_name}, #{wineCtnt})
+		(#{wine_name}, #{wineCtnt}, #{i_user})
 	</insert>
 	
 	<select id="selWineList" parameterType="com.potofolio.wine.info.WineVO" resultType="com.potofolio.wine.info.WineVO">

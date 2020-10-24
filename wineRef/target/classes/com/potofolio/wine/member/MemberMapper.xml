@@ -2,18 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.potofolio.wine.member.MemberMapper">
 
-	<insert id="join" parameterType="com.potofolio.wine.member.MemberVO">
+	<insert id="joinPost" parameterType="com.potofolio.wine.member.MemberVO"
+			useGeneratedKeys="true" keyProperty="i_user">
 		insert into wine_memberInfo
 		(cid, cpw, salt, nm, email) 
 		values(#{cid} ,#{cpw},#{salt}, #{nm}, #{email})
 	</insert>
 	
 	<select id="login" parameterType="com.potofolio.wine.member.MemberVO" resultType="com.potofolio.wine.member.MemberVO">
-		select i_user,cid,cpw,salt,nm from wine_memberInfo where cid=#{cid} 
+		select i_user, cid, cpw, salt, nm , email from 
+		wine_memberInfo where 
+		cid =#{cid}
 	</select>
 	
 	<select id="chkId" parameterType="String" resultType="int">
-		SELECT count(cid) FROM wine_memberInfo
+		SELECT count(*) FROM wine_memberInfo
 		WHERE cid = #{cid}
 	</select>
 	

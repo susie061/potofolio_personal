@@ -23,7 +23,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.potofolio.wine" />
+	<context:component-scan base-package="com.potofolio.wine.common" />
+	<context:component-scan base-package="com.potofolio.wine.info" />
+	<context:component-scan base-package="com.potofolio.wine.member" />
 
 	<beans:bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 	    <beans:property name="poolName" value="springHikariCP" />
@@ -46,9 +48,9 @@
 		<beans:property name="dataSource" ref="dataSource"/>
 	</beans:bean>
 	
-	<mybatis-spring:scan base-package="com.potofolio.wine"/>
-	
-		 
+	<mybatis-spring:scan base-package="com.potofolio.wine.member"/>
+	<mybatis-spring:scan base-package="com.potofolio.wine.info"/>
+	<mybatis-spring:scan base-package="com.potofolio.wine.common"/>	 
 	</beans:beans>
 
 

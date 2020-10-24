@@ -16,7 +16,10 @@ public class WineListService {
 	private WineListMapper mapper;
 
 //글쓰기
-	public int insWine(WineVO wvo) {
+	public int insWine(WineVO wvo ,HttpSession hs ) {
+		MemberVO loginUser = (MemberVO)hs.getAttribute("loginUser");
+		wvo.setI_user(loginUser.getI_user());
+		
 		return mapper.insWine(wvo);
 	}
 
@@ -46,7 +49,8 @@ public class WineListService {
 	public int insertCmt(WineCmtVO wcvo, HttpSession hs) {
 		MemberVO loginUser = (MemberVO) hs.getAttribute("loginUser");
 		wcvo.setCid(loginUser.getCid());
-		// wcvo.setI_user(loginUser.getI_user());
+		wcvo.setI_user(loginUser.getI_user());
+		
 		return mapper.insertCmt(wcvo);
 	}
 

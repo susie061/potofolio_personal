@@ -48,142 +48,142 @@ public class MemberService {
 	public int login(MemberVO mvo, HttpSession hs) {
 		int result = 0;
 		MemberVO data = mapper.login(mvo);
-		
+
 		System.out.println("cid: " + mvo.getCid());
 		System.out.println("cpw: " + mvo.getCpw());
-		
-		
+//정보가 있을떄 
 		if (data == null) {
 			result = 2;
 		} else {
-			String clientCpw = MyUtils.hashPassword(mvo.getCpw(), data.getSalt());
-			if (data.getCpw().equals(clientCpw)) {
+			String clientUpw = MyUtils.hashPassword(mvo.getCpw(), data.getSalt());
+			if (data.getCpw().equals(clientUpw)) {
 				result = 1;
 				MemberVO loginUser = new MemberVO();
 				loginUser.setI_user(data.getI_user());
 				loginUser.setNm(data.getNm());
+
 				hs.setAttribute("loginUser", loginUser);
-				
-			//	data.setCpw(null);
 			} else {
 				result = 3;
 			}
 		}
 		return result;
 	}
+
 	public int kakaoLogin(String code, HttpSession hs) {
-		int result =0;
-		//---------------------------------사용자 토큰 받기(access_token,refresh_token)-----------------------//
-			//인코딩
-			Charset utf8 = Charset.forName("UTF-8");
-			//헤더 설정(auth통신 설정)
-			HttpHeaders headers = new HttpHeaders();
-			MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON, utf8);		
-			headers.setAccept(Arrays.asList(mediaType));
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);		
-				
-			//파라미터설정
-			MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
-			map.add("grant_type", "authorization_code");
-			map.add("client_id", Const.KAKAO_CLIENT_ID);
-			map.add("redirect_uri", Const.KAKAO_AUTH_REDIRECT_URL);
-			map.add("code", code);
-						
-			HttpEntity<LinkedMultiValueMap<String, Object>> entity = new HttpEntity(map, headers);
-				
-			//결과값 가져옴
-			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<String> respEntity 
-			= restTemplate.exchange(Const.KAKO_ACCESS_TOKEN_HOST, HttpMethod.POST, entity, String.class);
-				
-			String data = respEntity.getBody();
-				
-			System.out.println("result : " + data);
-				
-				
-			ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-				
-			KakaoAuth auth = null;
-				
-			try {
-				auth = om.readValue(data, KakaoAuth.class);
-					
-				System.out.println("access_token: " + auth.getAccess_token());
-				System.out.println("refresh_token: " + auth.getRefresh_toekn());
-				System.out.println("expires_in: " + auth.getExpress_in());
-				System.out.println("refresh_token_expires_in: " + auth.getRefresh_token_expires_in());
-					
-			} catch (JsonMappingException e) {			
-				e.printStackTrace();
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-				
-			//------------------------------사용자 토큰 받기 (END)--------------------------------//
-				
-				
-			//----------------------------사용자 정보 가져오기-------------------------------------//
-			HttpHeaders headers2 = new HttpHeaders();		
-			MediaType mediaType2 = new MediaType(MediaType.APPLICATION_JSON, utf8);		
-			headers2.setAccept(Arrays.asList(mediaType2));
-			headers2.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			headers2.set("Authorization", "Bearer " +  auth.getAccess_token());
-						
-			HttpEntity<LinkedMultiValueMap<String, Object>> entity2 = new HttpEntity("", headers2);
-				
-			//결과값을 가져오기 위해 result2에 담음
-			ResponseEntity<String> respEntity2 
-			= restTemplate.exchange(Const.KAKAO_API_HOST + "/v2/user/me", HttpMethod.GET, entity2, String.class);
-				
-			//JSON에 담겨져 와서 jackson으로 필요한값만 받아서 오게 해야한다.
-			String result2 = respEntity2.getBody();
-			System.out.println("result2 : " + result2);
-				
-			KakaoUserInfo kui = null;
-			KakaoUserInfo kui2 = null;
-			
-			try {
-				//jackson으로 필요한 정보만 받아온다.
-				kui = om.readValue(result2, KakaoUserInfo.class);
-				kui2 = om.readValue(result2, KakaoUserInfo.class);
-					
-				System.out.println("id: " + kui.getId());
-				System.out.println("connected_at: " + kui.getConnected_at());
-				System.out.println("nickname:"+kui2.getProperties().getNickname());
-					
-			} catch (JsonMappingException e) {			
-				e.printStackTrace();
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-			//-------------------------- 사용자 정보 가져오기(END)--------------------------//
-			
-			//id존재 check
-			MemberVO uvo = new MemberVO();
-			uvo.setCid(String.valueOf(kui.getId()));
-			
-			MemberVO dbResult = mapper.login(uvo);
-			
-			//회원가입
-			if(dbResult == null) {
-				uvo.setNm(kui2.getProperties().getNickname());
-				uvo.setCpw("");
-				uvo.setSalt("");
-				uvo.setEmail("");
-				
-				mapper.join(uvo);
-				
-				dbResult = uvo;
-			}
-			//로그인 처리(세션에 값 추가)
-			//내장객체에 dbResult에 담긴 값을 담는다.
-			hs.setAttribute("loginUser", dbResult);
-			
-			return result;
+		int result = 0;
+		// ---------------------------------사용자 토큰
+		// 받기(access_token,refresh_token)-----------------------//
+		// 인코딩
+		Charset utf8 = Charset.forName("UTF-8");
+		// 헤더 설정(auth통신 설정)
+		HttpHeaders headers = new HttpHeaders();
+		MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON, utf8);
+		headers.setAccept(Arrays.asList(mediaType));
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		// 파라미터설정
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.add("grant_type", "authorization_code");
+		map.add("client_id", Const.KAKAO_CLIENT_ID);
+		map.add("redirect_uri", Const.KAKAO_AUTH_REDIRECT_URL);
+		map.add("code", code);
+
+		HttpEntity<LinkedMultiValueMap<String, Object>> entity = new HttpEntity(map, headers);
+
+		// 결과값 가져옴
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> respEntity = restTemplate.exchange(Const.KAKO_ACCESS_TOKEN_HOST, HttpMethod.POST, entity,
+				String.class);
+
+		String data = respEntity.getBody();
+
+		System.out.println("result : " + data);
+
+		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+		KakaoAuth auth = null;
+
+		try {
+			auth = om.readValue(data, KakaoAuth.class);
+
+			System.out.println("access_token: " + auth.getAccess_token());
+			System.out.println("refresh_token: " + auth.getRefresh_toekn());
+			System.out.println("expires_in: " + auth.getExpress_in());
+			System.out.println("refresh_token_expires_in: " + auth.getRefresh_token_expires_in());
+
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		// ------------------------------사용자 토큰 받기
+		// (END)--------------------------------//
+
+		// ----------------------------사용자 정보
+		// 가져오기-------------------------------------//
+		HttpHeaders headers2 = new HttpHeaders();
+		MediaType mediaType2 = new MediaType(MediaType.APPLICATION_JSON, utf8);
+		headers2.setAccept(Arrays.asList(mediaType2));
+		headers2.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		headers2.set("Authorization", "Bearer " + auth.getAccess_token());
+
+		HttpEntity<LinkedMultiValueMap<String, Object>> entity2 = new HttpEntity("", headers2);
+
+		// 결과값을 가져오기 위해 result2에 담음
+		ResponseEntity<String> respEntity2 = restTemplate.exchange(Const.KAKAO_API_HOST + "/v2/user/me", HttpMethod.GET,
+				entity2, String.class);
+
+		// JSON에 담겨져 와서 jackson으로 필요한값만 받아서 오게 해야한다.
+		String result2 = respEntity2.getBody();
+		System.out.println("result2 : " + result2);
+
+		KakaoUserInfo kui = null;
+		KakaoUserInfo kui2 = null;
+
+		try {
+			// jackson으로 필요한 정보만 받아온다.
+			kui = om.readValue(result2, KakaoUserInfo.class);
+			kui2 = om.readValue(result2, KakaoUserInfo.class);
+
+			System.out.println("id: " + kui.getId());
+			System.out.println("connected_at: " + kui.getConnected_at());
+			System.out.println("nickname:" + kui2.getProperties().getNickname());
+
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		// -------------------------- 사용자 정보 가져오기(END)--------------------------//
+
+		// id존재 check
+		MemberVO uvo = new MemberVO();
+		uvo.setCid(String.valueOf(kui.getId()));
+
+		MemberVO dbResult = mapper.login(uvo);
+
+		// 회원가입
+		if (dbResult == null) {
+			uvo.setNm(kui2.getProperties().getNickname());
+			uvo.setCpw("");
+			uvo.setSalt("");
+			uvo.setEmail("");
+
+			mapper.join(uvo);
+
+			dbResult = uvo;
+		}
+		// 로그인 처리(세션에 값 추가)
+		// 내장객체에 dbResult에 담긴 값을 담는다.
+		hs.setAttribute("loginUser", dbResult);
+
+		return result;
 	}
-	
+
 	public int chkId(String cid) {
-		
-		return mapper.chkId(cid) ;
+
+		return mapper.chkId(cid);
 	}
 }

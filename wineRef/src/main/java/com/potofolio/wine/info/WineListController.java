@@ -20,22 +20,22 @@ public class WineListController {
 
 //글작성 화면 뛰어주기
 	@RequestMapping(value = "/recommend", method = RequestMethod.GET)
-	public String wineRef(HttpSession hs) {
+	public String wineRef() {
+
+		return "wine/recommend";
+	}
+
+	@RequestMapping(value = "/recommend", method = RequestMethod.POST)
+	public String wineRef(WineVO wvo, Model model, HttpSession hs) {
 
 		MemberVO loginUser = (MemberVO) hs.getAttribute("loginUser");
 		if (loginUser == null) {
 			return "redirect:/user/login";
 		}
-		return "wine/recommend";
-	}
-
-	@RequestMapping(value = "/recommend", method = RequestMethod.POST)
-	public String wineRef(WineVO wvo) {
 
 		System.out.println("wineName: " + wvo.getWine_name());
 		System.out.println("wineCtnt: " + wvo.getWineCtnt());
-
-		int restult = service.insWine(wvo);
+		model.addAttribute(service.insWine(wvo, hs));
 
 		return "redirect:/wine/refList";
 	}
@@ -43,7 +43,10 @@ public class WineListController {
 //리스트 뿌려주는 화면
 	@RequestMapping(value = "/refList", method = RequestMethod.GET)
 	public String wineList(Model model, WineVO wvo, HttpSession hs) {
-
+		MemberVO loginUser = (MemberVO) hs.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "user/login";
+		}
 		model.addAttribute("data", service.selWineList(wvo));
 		return "wine/refList";
 	}
@@ -68,8 +71,11 @@ public class WineListController {
 
 //게시글 수정	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String wineUpd(Model model, WineVO wvo) {
-
+	public String wineUpd(Model model, WineVO wvo, HttpSession hs) {
+		MemberVO loginUser = (MemberVO) hs.getAttribute("loginUser");
+		if (loginUser == null) {
+			return "redirect:/user/login";
+		}
 		model.addAttribute("data", service.selWine(wvo));
 		return "wine/recommend";
 	}
@@ -78,30 +84,30 @@ public class WineListController {
 	public String wineUpd(WineVO wvo) {
 
 		int result = service.update(wvo);
-		return "redirect:/wine/refList";
+		return "redirect:/wine/wineList?wine_num=" + wvo.getWine_num();
 	}
 
-	@RequestMapping(value = "/wineCmt", method = RequestMethod.GET)
-	public String wineCmt(WineCmtVO wcvo, HttpSession hs, RedirectAttributes redirectAttributes) {
-
-		MemberVO loginUser = (MemberVO) hs.getAttribute("loginUser");
-		if (loginUser == null) {
-			return "/wine/login";
-		}
-
-		service.insertCmt(wcvo, hs);
-		redirectAttributes.addFlashAttribute("wineName", wcvo.getWine_name());
-		return "redirect:/wine/wineList";
-	}
-	@RequestMapping(value = "wineCmt", method = RequestMethod.POST)
-	public String wineCmt(WineCmtVO wcvo) {
-		
-		System.out.println("i_comment: " +wcvo.getI_comment());
-		System.out.println("wine_name:" + wcvo.getWine_name());
-		System.out.println("ctnt: " + wcvo.getCtnt());
-
-	
-		return "redirect:/wine/wineList";
-	
-	}
+//	@RequestMapping(value = "/wineCmt", method = RequestMethod.GET)
+//	public String wineCmt(WineCmtVO wcvo, HttpSession hs, RedirectAttributes redirectAttributes) {
+//
+//		MemberVO loginUser = (MemberVO) hs.getAttribute("loginUser");
+//		if (loginUser == null) {
+//			return "/wine/login";
+//		}
+//
+//		service.insertCmt(wcvo, hs);
+//		redirectAttributes.addFlashAttribute("wineName", wcvo.getWine_name());
+//		return "redirect:/wine/wineList";
+//	}
+//
+//	@RequestMapping(value = "wineCmt", method = RequestMethod.POST)
+//	public String wineCmt(WineCmtVO wcvo, Model model) {
+//
+//		System.out.println("i_comment: " + wcvo.getI_comment());
+//		System.out.println("wine_name:" + wcvo.getWine_name());
+//		System.out.println("ctnt: " + wcvo.getCtnt());
+//
+//		return "redirect:/wine/wineList";
+//
+//	}
 }

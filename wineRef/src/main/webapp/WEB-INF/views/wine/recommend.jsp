@@ -8,8 +8,9 @@
 <title>글쓰기</title>
 </head>
 <body>
-	<form id="frm" action="/wine/${data != null ? 'update' :'recommend' }" method="post">
-		<div><input type="hidden" name="wine_num" value="${data != null? data.wine_num : 0}"></div>
+	<div><h3>글쓰기</h3></div>
+	<form action="/wine/${data != null ? 'update' : 'recommend'}" method="post">
+		<div><input type="hidden" name="wine_num" value="${data != null ? data.wine_num :0}"></div>
 		<div><input type="text" placeholder="wineName" name="wine_name" value="${data.wine_name}"></div>
 		<div><textarea name="wineCtnt" placeholder="wineCtnt">${data.wineCtnt}</textarea></div>
 		<div><input type="submit" value="${data != null ? '수정' : '등록' }"></div>
